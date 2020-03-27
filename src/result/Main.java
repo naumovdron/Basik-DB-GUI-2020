@@ -28,8 +28,21 @@ package result;
         Реализовать данное приложения пользуясь только средствами JDBC.
 */
 
+import lab4.*;
+import lab5.*;
+import java.sql.*;
+
 public class Main {
     public static void main(String[] args) {
+        try {
+            Connection connection = DBConnection.getConnection();
 
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("CREATE TABLE id INTEGER PRIMARY KEY, prodid INTEGER, title TEXT, cost INTEGER ");
+
+        } catch (SQLException e) {
+            System.out.println("Something went wrong");
+            System.err.println(e.getMessage());
+        }
     }
 }
