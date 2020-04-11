@@ -17,6 +17,7 @@ public class UpdateCommand implements Command {
             Connection connection = DBConnection.getConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate(update);
+            statement.close();
         } catch (SQLException e) {
             System.out.println("SOMETHING WENT WRONG");
             System.err.println(e.getMessage());

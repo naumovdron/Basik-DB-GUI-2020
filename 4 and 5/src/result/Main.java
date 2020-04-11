@@ -44,8 +44,7 @@ public class Main {
     static int N = 10;
 
     public static void main(String[] args) {
-        try(Connection connection = DBConnection.getConnection()) {
-            Statement statement = connection.createStatement();
+        try(Connection connection = DBConnection.getConnection(); Statement statement = connection.createStatement()) {
             System.out.println("CREATING TABLE...");
             statement.executeUpdate("CREATE TABLE products (id INTEGER PRIMARY KEY AUTO_INCREMENT, prodid INTEGER, title VARCHAR(255) UNIQUE , cost INTEGER)");
             System.out.println("SUCCESS");

@@ -21,6 +21,7 @@ public class QueryCommand implements Command {
             while (result.next()) {
                 System.out.println(getStringResult(result));
             }
+            statement.close();
         } catch (SQLException e) {
             System.out.println("SOMETHING WENT WRONG");
             System.err.println(e.getMessage());
