@@ -1,6 +1,5 @@
 package result;
 
-import lab4.commands.Command;
 import lab4.dbwork.DBConnection;
 import lab4.parser.CommandParser;
 
@@ -42,30 +41,30 @@ import java.util.Scanner;
 
 public class Main {
 
-    static int N = 100;
+    static int N = 10;
 
     public static void main(String[] args) {
         try(Connection connection = DBConnection.getConnection()) {
             Statement statement = connection.createStatement();
-
             System.out.println("CREATING TABLE...");
-            statement.executeUpdate("CREATE TABLE products (id INTEGER PRIMARY KEY, prodid INTEGER, title TEXT, cost INTEGER)");
+            statement.executeUpdate("CREATE TABLE products (id INTEGER PRIMARY KEY AUTO_INCREMENT, prodid INTEGER, title VARCHAR(255) UNIQUE , cost INTEGER)");
             System.out.println("SUCCESS");
 
-            for (int i = 0; i < N; i++) {
-                statement.executeUpdate("INSERT INTO products VALUE (" + i + ", " + i + ", 'product" + i + "', " + i * 100 + ")");
+            System.out.println("FILLING TABLE...");
+            for (int i = 1; i <= N; i++) {
+                statement.executeUpdate("INSERT INTO products(prodid, title, cost) VALUE (" + i + ", 'product" + i + "', " + i * 100 + ")");
             }
+            System.out.println("SUCCESS");
 
-            try(Scanner in = new Scanner(System.in)) {
-                while (CommandParser.parse(in).execute()) {}
-            }
-
+            Scanner in = new Scanner(System.in);
+            while (CommandParser.parse(in).execute()) {}
+            in.close();
 
             System.out.println("REMOVING TABLE...");
             statement.executeUpdate("DROP TABLE products");
             System.out.println("SUCCESS");
         } catch (SQLException e) {
-            System.out.println("Something went wrong");
+            System.out.println("SOMETHING WENT WRONG");
             System.err.println(e.getMessage());
         }
     }
