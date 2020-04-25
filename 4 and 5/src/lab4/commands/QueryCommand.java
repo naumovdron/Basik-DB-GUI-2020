@@ -10,18 +10,21 @@ import java.sql.Statement;
 public class QueryCommand implements Command {
     public QueryCommand(String query) {
         this.query = query;
+        try {
+            connection = DBConnection.getConnection();
+        } catch (SQLException e) {
+            System.out.println("SOMETHING WENT WRONG");
+            System.err.println(e.getMessage());
+        }
     }
 
     @Override
     public boolean execute() {
-        try {
-            Connection connection = DBConnection.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(query);
+        try(Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query)) {
             while (result.next()) {
                 System.out.println(getStringResult(result));
             }
-            statement.close();
         } catch (SQLException e) {
             System.out.println("SOMETHING WENT WRONG");
             System.err.println(e.getMessage());
@@ -51,4 +54,5 @@ public class QueryCommand implements Command {
     }
 
     private String query;
+    private Connection connection;
 }

@@ -55,9 +55,9 @@ public class Main {
             }
             System.out.println("SUCCESS");
 
-            Scanner in = new Scanner(System.in);
-            while (CommandParser.parse(in).execute()) {}
-            in.close();
+            try(Scanner in = new Scanner(System.in)) {
+                while (CommandParser.parse(in).execute()) {}
+            }
 
             System.out.println("REMOVING TABLE...");
             statement.executeUpdate("DROP TABLE products");

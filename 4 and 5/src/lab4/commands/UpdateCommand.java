@@ -9,15 +9,18 @@ import java.sql.Statement;
 public class UpdateCommand implements Command {
     public UpdateCommand(String update) {
         this.update = update;
+        try {
+            connection = DBConnection.getConnection();
+        } catch (SQLException e) {
+            System.out.println("SOMETHING WENT WRONG");
+            System.err.println(e.getMessage());
+        }
     }
 
     @Override
     public boolean execute() {
-        try {
-            Connection connection = DBConnection.getConnection();
-            Statement statement = connection.createStatement();
+        try(Statement statement = connection.createStatement()) {
             statement.executeUpdate(update);
-            statement.close();
         } catch (SQLException e) {
             System.out.println("SOMETHING WENT WRONG");
             System.err.println(e.getMessage());
@@ -26,4 +29,5 @@ public class UpdateCommand implements Command {
     }
 
     private String update;
+    private Connection connection;
 }
