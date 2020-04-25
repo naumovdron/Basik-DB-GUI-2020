@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
     public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed() || connection.isClosed()) {
+        if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(url, user, password);
         }
         return connection;
