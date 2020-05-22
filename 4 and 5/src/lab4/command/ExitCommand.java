@@ -1,4 +1,4 @@
-package lab4.commands;
+package lab4.command;
 
 public class ExitCommand implements Command {
     @Override

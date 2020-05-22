@@ -1,5 +1,7 @@
-package lab4.commands;
+package lab5.command;
 
+import javafx.scene.control.Label;
+import lab4.command.Command;
 import lab4.dbwork.DBConnection;
 
 import java.sql.Connection;
@@ -7,8 +9,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UpdateCommand implements Command {
-    public UpdateCommand(String update) {
+    private String update;
+    private Connection connection;
+    private Label errors;
+
+    public UpdateCommand(String update, Label errors) {
         this.update = update;
+        this.errors = errors;
         try {
             connection = DBConnection.getConnection();
         } catch (SQLException e) {
@@ -24,10 +31,8 @@ public class UpdateCommand implements Command {
         } catch (SQLException e) {
             System.out.println("SOMETHING WENT WRONG");
             System.err.println(e.getMessage());
+            errors.setText(e.getMessage());
         }
         return true;
     }
-
-    private String update;
-    private Connection connection;
 }

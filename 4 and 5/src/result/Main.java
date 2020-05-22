@@ -1,45 +1,21 @@
 package result;
 
-import lab4.dbwork.DBConnection;
-import lab4.parser.CommandParser;
-
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.stage.Stage;
+import java.net.URL;
 import java.sql.*;
 import java.util.Scanner;
 
-/*Работа с БД.
-        Сформировать таблицу товаров (id, prodid, title, cost) запросом из Java-приложения.
-        При запуске приложения очищать таблицу и заполнять N товаров вида:
-        id_товара 1 товар1 10
-        Написать консольное приложение, которое позволяет:
+import lab4.dbwork.DBConnection;
+import lab4.parser.CommandParser;
+import lab5.MainSceneController;
 
-        1. Добавить товар в таблицу, в табице не может быть 2 товара с одинаковым именем
-        Пример:
-        /add товар666 1050
-
-        2. Удалить товар из таблицы	по имени.
-        Пример:
-        /delete товар1984
-
-        3. Вывести все товары в консоль.
-        Пример:
-        /show_аll
-
-        4. Узнать цену товара по его имени, либо если такого товара нет, то должно быть выведено сообщение "Такого товара нет".
-        Пример:
-        /price товар777
-
-        5. Изменить цену товара.
-        Пример:
-        /change_price товар10 10000
-
-        6. Вывести товары в заданном ценовом диапазоне цен.
-        Пример:
-        /filter_by_price 1000 10000
-
-        Реализовать данное приложения пользуясь только средствами JDBC.
-*/
-
-public class Main {
+public class Main extends Application {
 
     static int N = 10;
 
@@ -55,9 +31,11 @@ public class Main {
             }
             System.out.println("SUCCESS");
 
-            try(Scanner in = new Scanner(System.in)) {
-                while (CommandParser.parse(in).execute()) {}
-            }
+            Application.launch();
+
+            //try(Scanner in = new Scanner(System.in)) {
+                //while (CommandParser.parse(in).execute()) {}
+            //}
 
             System.out.println("REMOVING TABLE...");
             statement.executeUpdate("DROP TABLE products");
@@ -66,5 +44,22 @@ public class Main {
             System.out.println("SOMETHING WENT WRONG");
             System.err.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        //Parent root = FXMLLoader.load(getClass().getResource("../lab5/main.fxml"));
+
+        FXMLLoader loader = new FXMLLoader();
+        URL xmlUrl = getClass().getResource("../lab5/main.fxml");
+        loader.setLocation(xmlUrl);
+        Parent root = loader.load();
+
+        //MainSceneController controller = loader.getController();
+        //controller.actionChoiceBox = new ChoiceBox<String>(FXCollections.observableArrayList("Add", "Change Price", "Delete", "Price"));
+
+        stage.setScene(new Scene(root));
+        stage.setTitle("Products");
+        stage.show();
     }
 }

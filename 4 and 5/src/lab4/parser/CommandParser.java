@@ -1,6 +1,6 @@
 package lab4.parser;
 
-import lab4.commands.*;
+import lab4.command.*;
 import java.util.Scanner;
 
 public class CommandParser {

@@ -1,4 +1,4 @@
-package lab4.commands;
+package lab4.command;
 
 public class ReportCommand implements Command {
     public ReportCommand(String message) {

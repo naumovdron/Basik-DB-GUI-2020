@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="282.0" prefWidth="584.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lab5.MainSceneController">
+   <children>
+      <VBox layoutX="10.0" layoutY="10.0" prefHeight="279.0" prefWidth="568.0">
+         <children>
+            <AnchorPane prefHeight="74.0" prefWidth="578.0">
+               <children>
+                  <Label layoutX="10.0" layoutY="9.0" text="Title:" />
+                  <TextField fx:id="titleTextField" layoutX="10.0" layoutY="26.0" prefHeight="25.0" prefWidth="143.0" promptText="product title" onKeyTyped="#textFieldChanged" />
+                  <ChoiceBox fx:id="actionChoiceBox" layoutX="167.0" layoutY="26.0" prefHeight="25.0" prefWidth="95.0" onAction="#choiceBoxClicked" value="Add">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="Add" />
+                           <String fx:value="Change Price" />
+                           <String fx:value="Delete" />
+                           <String fx:value="Price" />
+                        </FXCollections>
+                     </items>
+                  </ChoiceBox>
+                  <Label fx:id="actionLabel" layoutX="275.0" layoutY="9.0" text="Price:" />
+                  <TextField fx:id="actionTextField" layoutX="275.0" layoutY="26.0" promptText="price" onKeyTyped="#textFieldChanged"/>
+                  <Button fx:id="actionButton" layoutX="437.0" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Add" onAction="#actionButtonClicked" disable="true"/>
+                  <Label fx:id="errorLabel" layoutX="10.0" layoutY="60.0" textFill="crimson"/>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="table" layoutX="10.0" layoutY="9.0" prefHeight="168.0" prefWidth="412.0">
+                     <columns>
+                        <TableColumn fx:id="prodIdColumn" prefWidth="52.0" text="prodid" />
+                        <TableColumn fx:id="titleColumn" prefWidth="260.0" text="title" />
+                        <TableColumn fx:id="priceColumn" prefWidth="103.0" text="price" />
+                     </columns>
+                  </TableView>
+                  <Button fx:id="showButton" layoutX="437.0" layoutY="152.0" mnemonicParsing="false" onAction="#showButtonClicked" prefHeight="25.0" prefWidth="118.0" text="Show" disable="true"/>
+                  <TextField fx:id="startPriceTextField" layoutX="438.0" layoutY="26.0" prefHeight="25.0" prefWidth="116.0" promptText="start price" onKeyTyped="#priceTextFieldChanged"/>
+                  <TextField fx:id="finalPriceTextField" layoutX="438.0" layoutY="68.0" prefHeight="25.0" prefWidth="116.0" promptText="final price" onKeyTyped="#priceTextFieldChanged"/>
+                  <Label fx:id="startPriceLabel" layoutX="439.0" layoutY="9.0" text="From:" />
+                  <Label fx:id="finalPriceLabel" layoutX="438.0" layoutY="52.0" text="To:" />
+                  <CheckBox fx:id="showAllCheckBox" layoutX="463.0" layoutY="104.0" mnemonicParsing="false" text="Show All" onAction="#showAllCheckBoxClicked" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
