@@ -4,8 +4,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import lab4.command.Command;
-import lab5.command.*;
+import lab4.command.QueryCommand;
+import lab4.command.UpdateCommand;
 import lab5.model.Product;
+import strategy.GuiStrategy;
+import strategy.OutStrategy;
 
 public class MainSceneController {
     @FXML
@@ -41,11 +44,14 @@ public class MainSceneController {
     @FXML
     private Label errorLabel;
 
+    private OutStrategy outStrategy;
+
     @FXML
     private void initialize() {
         prodIdColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getProdId().toString()));
         titleColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitle()));
         priceColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPrice().toString()));
+        outStrategy = new GuiStrategy(table, errorLabel);
     }
 
     @FXML
@@ -103,7 +109,6 @@ public class MainSceneController {
     @FXML
     private void showButtonClicked() {
         errorLabel.setText("");
-        table.getItems().remove(0, table.getItems().size());
         String request;
         if (showAllCheckBox.isSelected()) {
             request = "SELECT * FROM products";
@@ -113,40 +118,40 @@ public class MainSceneController {
                     + " AND "
                     + finalPriceTextField.getText();
         }
-        Command command = new QueryCommand(request, table, errorLabel);
+        Command command = new QueryCommand(request, outStrategy);
         command.execute();
     }
 
     @FXML
     private void actionButtonClicked() {
         errorLabel.setText("");
-        table.getItems().remove(0, table.getItems().size());
         Command command = null;
         switch (actionChoiceBox.getValue()) {
             case "Add":
                 command = new UpdateCommand("INSERT INTO products(title, cost) VALUE ('"
                         + titleTextField.getText() + "', "
                         + actionTextField.getText() + ")",
-                        errorLabel
+                        outStrategy
                 );
                 break;
             case "Change Price":
                 command = new UpdateCommand("UPDATE products SET cost = "
                         + actionTextField.getText() + " WHERE title = '"
                         + titleTextField.getText() + "'",
-                        errorLabel
+                        outStrategy
                 );
                 break;
             case "Delete":
                 command = new UpdateCommand("DELETE FROM products WHERE title = '"
                         + titleTextField.getText() + "'",
-                        errorLabel);
+                        outStrategy
+                );
                 break;
             case "Price":
                 command = new QueryCommand("SELECT * FROM products WHERE title = '"
                         + titleTextField.getText() + "'",
-                        table,
-                        errorLabel);
+                        outStrategy
+                );
                 break;
         }
         command.execute();

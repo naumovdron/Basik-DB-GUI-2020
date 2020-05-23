@@ -1,19 +1,24 @@
 package lab4.command;
 
 import lab4.dbwork.DBConnection;
+import strategy.OutStrategy;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UpdateCommand implements Command {
-    public UpdateCommand(String update) {
+    private String update;
+    private Connection connection;
+    private OutStrategy outStrategy;
+
+    public UpdateCommand(String update, OutStrategy outStrategy) {
         this.update = update;
+        this.outStrategy = outStrategy;
         try {
             connection = DBConnection.getConnection();
         } catch (SQLException e) {
-            System.out.println("SOMETHING WENT WRONG");
-            System.err.println(e.getMessage());
+            this.outStrategy.out("SOMETHING WENT WRONG: " + e.getMessage());
         }
     }
 
@@ -22,12 +27,8 @@ public class UpdateCommand implements Command {
         try(Statement statement = connection.createStatement()) {
             statement.executeUpdate(update);
         } catch (SQLException e) {
-            System.out.println("SOMETHING WENT WRONG");
-            System.err.println(e.getMessage());
+            outStrategy.out("SOMETHING WENT WRONG: " + e.getMessage());
         }
         return true;
     }
-
-    private String update;
-    private Connection connection;
 }

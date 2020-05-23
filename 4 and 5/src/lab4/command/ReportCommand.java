@@ -1,15 +1,19 @@
 package lab4.command;
 
+import strategy.OutStrategy;
+
 public class ReportCommand implements Command {
-    public ReportCommand(String message) {
+    private String message;
+    private OutStrategy outStrategy;
+
+    public ReportCommand(String message, OutStrategy outStrategy) {
         this.message = message;
+        this.outStrategy = outStrategy;
     }
 
     @Override
     public boolean execute() {
-        System.out.println(message);
+        outStrategy.out(message);
         return true;
     }
-
-    private String message;
 }

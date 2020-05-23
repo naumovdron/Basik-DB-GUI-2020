@@ -1,11 +1,9 @@
 package result;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.sql.*;
@@ -13,7 +11,6 @@ import java.util.Scanner;
 
 import lab4.dbwork.DBConnection;
 import lab4.parser.CommandParser;
-import lab5.MainSceneController;
 
 public class Main extends Application {
 
@@ -48,15 +45,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //Parent root = FXMLLoader.load(getClass().getResource("../lab5/main.fxml"));
-
         FXMLLoader loader = new FXMLLoader();
         URL xmlUrl = getClass().getResource("../lab5/main.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
-
-        //MainSceneController controller = loader.getController();
-        //controller.actionChoiceBox = new ChoiceBox<String>(FXCollections.observableArrayList("Add", "Change Price", "Delete", "Price"));
 
         stage.setScene(new Scene(root));
         stage.setTitle("Products");
